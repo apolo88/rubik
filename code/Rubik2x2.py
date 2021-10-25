@@ -18,7 +18,7 @@ class Corner:
     def getColoursSet(self, layersMap):
         coloursSet = set()
         for layer in self.coordsByLayer:
-            coloursSet.append(self.getColour(layersMap, layer))
+            coloursSet.add(self.getColour(layersMap, layer))
 
         return coloursSet
 
@@ -26,7 +26,6 @@ class Corner:
 
 class Rubik2x2(Rubik):
     
-
     def __init__(self):
         self.dim = 2
 
@@ -53,254 +52,254 @@ class Rubik2x2(Rubik):
     ####################
     def moveFront(self):
         #Rotation of front layer
-        aux = self.front[0][0]
-        self.front[0][0] = self.front[1][0]
-        self.front[1][0] = self.front[1][1]
-        self.front[1][1] = self.front[0][1]
-        self.front[0][1] = aux
+        aux = self.layersMap['F'][0][0]
+        self.layersMap['F'][0][0] = self.layersMap['F'][1][0]
+        self.layersMap['F'][1][0] = self.layersMap['F'][1][1]
+        self.layersMap['F'][1][1] = self.layersMap['F'][0][1]
+        self.layersMap['F'][0][1] = aux
 
         #Rotation of mid half layers
-        aux = self.up[1][0]
-        self.up[1][0] = self.left[1][1]
-        self.left[1][1] = self.down[0][1]
-        self.down[0][1] = self.right[0][0]
-        self.right[0][0] = aux
-        aux = self.up[1][1]
-        self.up[1][1] = self.left[0][1]
-        self.left[0][1] = self.down[0][0]
-        self.down[0][0] = self.right[1][0]
-        self.right[1][0] = aux
+        aux = self.layersMap['U'][1][0]
+        self.layersMap['U'][1][0] = self.layersMap['L'][1][1]
+        self.layersMap['L'][1][1] = self.layersMap['D'][0][1]
+        self.layersMap['D'][0][1] = self.layersMap['R'][0][0]
+        self.layersMap['R'][0][0] = aux
+        aux = self.layersMap['U'][1][1]
+        self.layersMap['U'][1][1] = self.layersMap['L'][0][1]
+        self.layersMap['L'][0][1] = self.layersMap['D'][0][0]
+        self.layersMap['D'][0][0] = self.layersMap['R'][1][0]
+        self.layersMap['R'][1][0] = aux
 
 
     def moveFrontP(self):
         #Rotation of front layer
-        aux = self.front[0][0]
-        self.front[0][0] = self.front[0][1]
-        self.front[0][1] = self.front[1][1]
-        self.front[1][1] = self.front[1][0]
-        self.front[1][0] = aux
+        aux = self.layersMap['F'][0][0]
+        self.layersMap['F'][0][0] = self.layersMap['F'][0][1]
+        self.layersMap['F'][0][1] = self.layersMap['F'][1][1]
+        self.layersMap['F'][1][1] = self.layersMap['F'][1][0]
+        self.layersMap['F'][1][0] = aux
 
         #Rotation of mid half layers
-        aux = self.up[1][0]
-        self.up[1][0] = self.right[0][0]
-        self.right[0][0] = self.down[0][1]
-        self.down[0][1] = self.left[1][1]
-        self.left[1][1] = aux
-        aux = self.up[1][1]
-        self.up[1][1] = self.right[1][0]
-        self.right[1][0] = self.down[0][0]
-        self.down[0][0] = self.left[0][1]
-        self.left[0][1] = aux
+        aux = self.layersMap['U'][1][0]
+        self.layersMap['U'][1][0] = self.layersMap['R'][0][0]
+        self.layersMap['R'][0][0] = self.layersMap['D'][0][1]
+        self.layersMap['D'][0][1] = self.layersMap['L'][1][1]
+        self.layersMap['L'][1][1] = aux
+        aux = self.layersMap['U'][1][1]
+        self.layersMap['U'][1][1] = self.layersMap['R'][1][0]
+        self.layersMap['R'][1][0] = self.layersMap['D'][0][0]
+        self.layersMap['D'][0][0] = self.layersMap['L'][0][1]
+        self.layersMap['L'][0][1] = aux
 
     
     def moveBack(self):
         #Rotation of back layer
-        aux = self.back[0][0]
-        self.back[0][0] = self.back[1][0]
-        self.back[1][0] = self.back[1][1]
-        self.back[1][1] = self.back[0][1]
-        self.back[0][1] = aux
+        aux = self.layersMap['B'][0][0]
+        self.layersMap['B'][0][0] = self.layersMap['B'][1][0]
+        self.layersMap['B'][1][0] = self.layersMap['B'][1][1]
+        self.layersMap['B'][1][1] = self.layersMap['B'][0][1]
+        self.layersMap['B'][0][1] = aux
 
         #Rotation of mid half layers
-        aux = self.up[0][1]
-        self.up[0][1] = self.right[1][1]
-        self.right[1][1] = self.down[1][0]
-        self.down[1][0] = self.left[0][0]
-        self.left[0][0] = aux
-        aux = self.up[0][0]
-        self.up[0][0] = self.right[0][1]
-        self.right[0][1] = self.down[1][1]
-        self.down[1][1] = self.left[1][0]
-        self.left[1][0] = aux
+        aux = self.layersMap['U'][0][1]
+        self.layersMap['U'][0][1] = self.layersMap['R'][1][1]
+        self.layersMap['R'][1][1] = self.layersMap['D'][1][0]
+        self.layersMap['D'][1][0] = self.layersMap['L'][0][0]
+        self.layersMap['L'][0][0] = aux
+        aux = self.layersMap['U'][0][0]
+        self.layersMap['U'][0][0] = self.layersMap['R'][0][1]
+        self.layersMap['R'][0][1] = self.layersMap['D'][1][1]
+        self.layersMap['D'][1][1] = self.layersMap['L'][1][0]
+        self.layersMap['L'][1][0] = aux
 
 
     def moveBackP(self):
         #Rotation of back layer
-        aux = self.back[0][0]
-        self.back[0][0] = self.back[0][1]
-        self.back[0][1] = self.back[1][1]
-        self.back[1][1] = self.back[1][0]
-        self.back[1][0] = aux
+        aux = self.layersMap['B'][0][0]
+        self.layersMap['B'][0][0] = self.layersMap['B'][0][1]
+        self.layersMap['B'][0][1] = self.layersMap['B'][1][1]
+        self.layersMap['B'][1][1] = self.layersMap['B'][1][0]
+        self.layersMap['B'][1][0] = aux
 
         #Rotation of mid half layers
-        aux = self.up[0][1]
-        self.up[0][1] = self.left[0][0]
-        self.left[0][0] = self.down[1][0]
-        self.down[1][0] = self.right[1][1]
-        self.right[1][1] = aux
-        aux = self.up[0][0]
-        self.up[0][0] = self.left[1][0]
-        self.left[1][0] = self.down[1][1]
-        self.down[1][1] = self.right[0][1]
-        self.right[0][1] = aux
+        aux = self.layersMap['U'][0][1]
+        self.layersMap['U'][0][1] = self.layersMap['L'][0][0]
+        self.layersMap['L'][0][0] = self.layersMap['D'][1][0]
+        self.layersMap['D'][1][0] = self.layersMap['R'][1][1]
+        self.layersMap['R'][1][1] = aux
+        aux = self.layersMap['U'][0][0]
+        self.layersMap['U'][0][0] = self.layersMap['L'][1][0]
+        self.layersMap['L'][1][0] = self.layersMap['D'][1][1]
+        self.layersMap['D'][1][1] = self.layersMap['R'][0][1]
+        self.layersMap['R'][0][1] = aux
 
 
     def moveUp(self):
         #Rotation of up layer
-        aux = self.up[0][0]
-        self.up[0][0] = self.up[1][0]
-        self.up[1][0] = self.up[1][1]
-        self.up[1][1] = self.up[0][1]
-        self.up[0][1] = aux
+        aux = self.layersMap['U'][0][0]
+        self.layersMap['U'][0][0] = self.layersMap['U'][1][0]
+        self.layersMap['U'][1][0] = self.layersMap['U'][1][1]
+        self.layersMap['U'][1][1] = self.layersMap['U'][0][1]
+        self.layersMap['U'][0][1] = aux
 
         #Rotation of mid half layers
-        aux = self.front[0][0]
-        self.front[0][0] = self.right[0][0]
-        self.right[0][0] = self.back[0][0]
-        self.back[0][0] = self.left[0][0]
-        self.left[0][0] = aux
-        aux = self.front[0][1]
-        self.front[0][1] = self.right[0][1]
-        self.right[0][1] = self.back[0][1]
-        self.back[0][1] = self.left[0][1]
-        self.left[0][1] = aux
+        aux = self.layersMap['F'][0][0]
+        self.layersMap['F'][0][0] = self.layersMap['R'][0][0]
+        self.layersMap['R'][0][0] = self.layersMap['B'][0][0]
+        self.layersMap['B'][0][0] = self.layersMap['L'][0][0]
+        self.layersMap['L'][0][0] = aux
+        aux = self.layersMap['F'][0][1]
+        self.layersMap['F'][0][1] = self.layersMap['R'][0][1]
+        self.layersMap['R'][0][1] = self.layersMap['B'][0][1]
+        self.layersMap['B'][0][1] = self.layersMap['L'][0][1]
+        self.layersMap['L'][0][1] = aux
 
 
     def moveUpP(self):
         #Rotation of up layer
-        aux = self.up[0][0]
-        self.up[0][0] = self.up[0][1]
-        self.up[0][1] = self.up[1][1]
-        self.up[1][1] = self.up[1][0]
-        self.up[1][0] = aux
+        aux = self.layersMap['U'][0][0]
+        self.layersMap['U'][0][0] = self.layersMap['U'][0][1]
+        self.layersMap['U'][0][1] = self.layersMap['U'][1][1]
+        self.layersMap['U'][1][1] = self.layersMap['U'][1][0]
+        self.layersMap['U'][1][0] = aux
 
         #Rotation of mid half layers
-        aux = self.front[0][0]
-        self.front[0][0] = self.left[0][0]
-        self.left[0][0] = self.back[0][0]
-        self.back[0][0] = self.right[0][0]
-        self.right[0][0] = aux
-        aux = self.front[0][1]
-        self.front[0][1] = self.left[0][1]
-        self.left[0][1] = self.back[0][1]
-        self.back[0][1] = self.right[0][1]
-        self.right[0][1] = aux
+        aux = self.layersMap['F'][0][0]
+        self.layersMap['F'][0][0] = self.layersMap['L'][0][0]
+        self.layersMap['L'][0][0] = self.layersMap['B'][0][0]
+        self.layersMap['B'][0][0] = self.layersMap['R'][0][0]
+        self.layersMap['R'][0][0] = aux
+        aux = self.layersMap['F'][0][1]
+        self.layersMap['F'][0][1] = self.layersMap['L'][0][1]
+        self.layersMap['L'][0][1] = self.layersMap['B'][0][1]
+        self.layersMap['B'][0][1] = self.layersMap['R'][0][1]
+        self.layersMap['R'][0][1] = aux
 
     
     def moveDown(self):
         #Rotation of down layer
-        aux = self.down[0][0]
-        self.down[0][0] = self.down[1][0]
-        self.down[1][0] = self.down[1][1]
-        self.down[1][1] = self.down[0][1]
-        self.down[0][1] = aux
+        aux = self.layersMap['D'][0][0]
+        self.layersMap['D'][0][0] = self.layersMap['D'][1][0]
+        self.layersMap['D'][1][0] = self.layersMap['D'][1][1]
+        self.layersMap['D'][1][1] = self.layersMap['D'][0][1]
+        self.layersMap['D'][0][1] = aux
 
         #Rotation of mid half layers
-        aux = self.front[1][0]
-        self.front[1][0] = self.left[1][0]
-        self.left[1][0] = self.back[1][0]
-        self.back[1][0] = self.right[1][0]
-        self.right[1][0] = aux
-        aux = self.front[1][1]
-        self.front[1][1] = self.left[1][1]
-        self.left[1][1] = self.back[1][1]
-        self.back[1][1] = self.right[1][1]
-        self.right[1][1] = aux
+        aux = self.layersMap['F'][1][0]
+        self.layersMap['F'][1][0] = self.layersMap['L'][1][0]
+        self.layersMap['L'][1][0] = self.layersMap['B'][1][0]
+        self.layersMap['B'][1][0] = self.layersMap['R'][1][0]
+        self.layersMap['R'][1][0] = aux
+        aux = self.layersMap['F'][1][1]
+        self.layersMap['F'][1][1] = self.layersMap['L'][1][1]
+        self.layersMap['L'][1][1] = self.layersMap['B'][1][1]
+        self.layersMap['B'][1][1] = self.layersMap['R'][1][1]
+        self.layersMap['R'][1][1] = aux
         
 
     def moveDownP(self):
         #Rotation of down layer
-        aux = self.down[0][0]
-        self.down[0][0] = self.down[0][1]
-        self.down[0][1] = self.down[1][1]
-        self.down[1][1] = self.down[1][0]
-        self.down[1][0] = aux
+        aux = self.layersMap['D'][0][0]
+        self.layersMap['D'][0][0] = self.layersMap['D'][0][1]
+        self.layersMap['D'][0][1] = self.layersMap['D'][1][1]
+        self.layersMap['D'][1][1] = self.layersMap['D'][1][0]
+        self.layersMap['D'][1][0] = aux
 
         #Rotation of mid half layers
-        aux = self.front[1][0]
-        self.front[1][0] = self.right[1][0]
-        self.right[1][0] = self.back[1][0]
-        self.back[1][0] = self.left[1][0]
-        self.left[1][0] = aux
-        aux = self.front[1][1]
-        self.front[1][1] = self.right[1][1]
-        self.right[1][1] = self.back[1][1]
-        self.back[1][1] = self.left[1][1]
-        self.left[1][1] = aux
+        aux = self.layersMap['F'][1][0]
+        self.layersMap['F'][1][0] = self.layersMap['R'][1][0]
+        self.layersMap['R'][1][0] = self.layersMap['B'][1][0]
+        self.layersMap['B'][1][0] = self.layersMap['L'][1][0]
+        self.layersMap['L'][1][0] = aux
+        aux = self.layersMap['F'][1][1]
+        self.layersMap['F'][1][1] = self.layersMap['R'][1][1]
+        self.layersMap['R'][1][1] = self.layersMap['B'][1][1]
+        self.layersMap['B'][1][1] = self.layersMap['L'][1][1]
+        self.layersMap['L'][1][1] = aux
 
         
     def moveLeft(self):
         #Rotation of left layer
-        aux = self.left[0][0]
-        self.left[0][0] = self.left[1][0]
-        self.left[1][0] = self.left[1][1]
-        self.left[1][1] = self.left[0][1]
-        self.left[0][1] = aux
+        aux = self.layersMap['L'][0][0]
+        self.layersMap['L'][0][0] = self.layersMap['L'][1][0]
+        self.layersMap['L'][1][0] = self.layersMap['L'][1][1]
+        self.layersMap['L'][1][1] = self.layersMap['L'][0][1]
+        self.layersMap['L'][0][1] = aux
 
         #Rotation of mid half layers
-        aux = self.up[0][0]
-        self.up[0][0] = self.back[1][1]
-        self.back[1][1] = self.down[0][0]
-        self.down[0][0] = self.front[0][0]
-        self.front[0][0] = aux
-        aux = self.up[1][0]
-        self.up[1][0] = self.back[0][1]
-        self.back[0][1] = self.down[1][0]
-        self.down[1][0] = self.front[1][0]
-        self.front[1][0] = aux
+        aux = self.layersMap['U'][0][0]
+        self.layersMap['U'][0][0] = self.layersMap['B'][1][1]
+        self.layersMap['B'][1][1] = self.layersMap['D'][0][0]
+        self.layersMap['D'][0][0] = self.layersMap['F'][0][0]
+        self.layersMap['F'][0][0] = aux
+        aux = self.layersMap['U'][1][0]
+        self.layersMap['U'][1][0] = self.layersMap['B'][0][1]
+        self.layersMap['B'][0][1] = self.layersMap['D'][1][0]
+        self.layersMap['D'][1][0] = self.layersMap['F'][1][0]
+        self.layersMap['F'][1][0] = aux
 
 
     def moveLeftP(self):
         #Rotation of left layer
-        aux = self.left[0][0]
-        self.left[0][0] = self.left[0][1]
-        self.left[0][1] = self.left[1][1]
-        self.left[1][1] = self.left[1][0]
-        self.left[1][0] = aux
+        aux = self.layersMap['L'][0][0]
+        self.layersMap['L'][0][0] = self.layersMap['L'][0][1]
+        self.layersMap['L'][0][1] = self.layersMap['L'][1][1]
+        self.layersMap['L'][1][1] = self.layersMap['L'][1][0]
+        self.layersMap['L'][1][0] = aux
 
         #Rotation of mid half layers
-        aux = self.up[0][0]
-        self.up[0][0] = self.front[0][0]  
-        self.front[0][0] = self.down[0][0]
-        self.down[0][0] = self.back[1][1]
-        self.back[1][1] = aux
-        aux = self.up[1][0]
-        self.up[1][0] = self.front[1][0]
-        self.front[1][0] = self.down[1][0]
-        self.down[1][0] = self.back[0][1]
-        self.back[0][1] = aux
+        aux = self.layersMap['U'][0][0]
+        self.layersMap['U'][0][0] = self.layersMap['F'][0][0]  
+        self.layersMap['F'][0][0] = self.layersMap['D'][0][0]
+        self.layersMap['D'][0][0] = self.layersMap['B'][1][1]
+        self.layersMap['B'][1][1] = aux
+        aux = self.layersMap['U'][1][0]
+        self.layersMap['U'][1][0] = self.layersMap['F'][1][0]
+        self.layersMap['F'][1][0] = self.layersMap['D'][1][0]
+        self.layersMap['D'][1][0] = self.layersMap['B'][0][1]
+        self.layersMap['B'][0][1] = aux
 
 
     def moveRight(self):
         #Rotation of right layer
-        aux = self.right[0][0]
-        self.right[0][0] = self.right[1][0]
-        self.right[1][0] = self.right[1][1]
-        self.right[1][1] = self.right[0][1]
-        self.right[0][1] = aux
+        aux = self.layersMap['R'][0][0]
+        self.layersMap['R'][0][0] = self.layersMap['R'][1][0]
+        self.layersMap['R'][1][0] = self.layersMap['R'][1][1]
+        self.layersMap['R'][1][1] = self.layersMap['R'][0][1]
+        self.layersMap['R'][0][1] = aux
 
         #Rotation of mid half layers
-        aux = self.up[1][1]
-        self.up[1][1] = self.front[1][1]
-        self.front[1][1] = self.down[1][1]
-        self.down[1][1] = self.back[0][0]
-        self.back[0][0] = aux
-        aux = self.up[0][1]
-        self.up[0][1] = self.front[0][1]
-        self.front[0][1] = self.down[0][1]
-        self.down[0][1] = self.back[1][0]
-        self.back[1][0] = aux
+        aux = self.layersMap['U'][1][1]
+        self.layersMap['U'][1][1] = self.layersMap['F'][1][1]
+        self.layersMap['F'][1][1] = self.layersMap['D'][1][1]
+        self.layersMap['D'][1][1] = self.layersMap['B'][0][0]
+        self.layersMap['B'][0][0] = aux
+        aux = self.layersMap['U'][0][1]
+        self.layersMap['U'][0][1] = self.layersMap['F'][0][1]
+        self.layersMap['F'][0][1] = self.layersMap['D'][0][1]
+        self.layersMap['D'][0][1] = self.layersMap['B'][1][0]
+        self.layersMap['B'][1][0] = aux
 
 
     def moveRightP(self):
         #Rotation of right layer
-        aux = self.right[0][0]
-        self.right[0][0] = self.right[0][1]
-        self.right[0][1] = self.right[1][1]
-        self.right[1][1] = self.right[1][0]
-        self.right[1][0] = aux
+        aux = self.layersMap['R'][0][0]
+        self.layersMap['R'][0][0] = self.layersMap['R'][0][1]
+        self.layersMap['R'][0][1] = self.layersMap['R'][1][1]
+        self.layersMap['R'][1][1] = self.layersMap['R'][1][0]
+        self.layersMap['R'][1][0] = aux
 
         #Rotation of mid half layers
-        aux = self.up[1][1]
-        self.up[1][1] = self.back[0][0]  
-        self.back[0][0] = self.down[1][1]
-        self.down[1][1] = self.front[1][1]
-        self.front[1][1] = aux
-        aux = self.up[0][1]
-        self.up[0][1] = self.back[1][0]
-        self.back[1][0] = self.down[0][1]
-        self.down[0][1] = self.front[0][1]
-        self.front[0][1] = aux
+        aux = self.layersMap['U'][1][1]
+        self.layersMap['U'][1][1] = self.layersMap['B'][0][0]  
+        self.layersMap['B'][0][0] = self.layersMap['D'][1][1]
+        self.layersMap['D'][1][1] = self.layersMap['F'][1][1]
+        self.layersMap['F'][1][1] = aux
+        aux = self.layersMap['U'][0][1]
+        self.layersMap['U'][0][1] = self.layersMap['B'][1][0]
+        self.layersMap['B'][1][0] = self.layersMap['D'][0][1]
+        self.layersMap['D'][0][1] = self.layersMap['F'][0][1]
+        self.layersMap['F'][0][1] = aux
     
 
     ####################
@@ -322,18 +321,27 @@ class Rubik2x2(Rubik):
 
     def solveDownFloor(self):
         
-        excludedPieceIds = set()
-        
         #Iterate 3 times to position the 3 pieces
         for i in range(3):
+
+            print('Start solve debug pos: ' + str(i))
+            sys.stdin.read(1)
+
             #Identify first position in down layer and get colours
             firstCornerDown = self.piecesMap['FDL']
-            excludedPieceIds.append(firstCornerDown)
             downColour = firstCornerDown.getColour(self.layersMap, 'D')
             frontColour = firstCornerDown.getColour(self.layersMap, 'F')
             
+            print('downColour: ' + downColour)
+            print('frontColour: ' + frontColour)
+            sys.stdin.read(1)
+
             #Find piece that should go on the right sending colours to be find and exclusion of the current piece
-            pieceIdFound = self.findPiece(set(downColor, frontColour), excludedPieceIds)
+            pieceIdFound = self.findPiece(set([downColour, frontColour]), set(['FDL'])])
+            
+            print('pieceIdFound: ' + pieceIdFound)
+            sys.stdin.read(1)
+            
             cornerPiece = self.piecesMap[pieceIdFound]
 
             #Place piece on correct position
@@ -342,18 +350,43 @@ class Rubik2x2(Rubik):
             #rotate cube vertical
             self.fullRotateVertical()
 
+            print('print after rotate: ' + pieceIdFound)
+            self.printCube()
+            sys.stdin.read(1)
+
 
     def findPiece(self, colours, exceptions) -> str:
-        for pieceId, piece in piecesMap:
+        for pieceId in self.piecesMap.keys():
+            
+            print('pieceId: ' + pieceId)
+            sys.stdin.read(1)
+            
             if not pieceId in exceptions:
-                pieceColoursSet = piece.getColoursSet()
-                if colours in pieceColoursSet:
+                piece = self.piecesMap[pieceId]
+
+                print('piece Id: ' + piece.pieceId)
+                sys.stdin.read(1)
+
+                pieceColoursSet = piece.getColoursSet(self.layersMap)
+
+                print('pieceColoursSet: ' + str(pieceColoursSet))
+                print('colours: ' + str(colours))
+                sys.stdin.read(1)
+
+                if colours.issubset(pieceColoursSet):
+
+                    print('return piece Id: ' + pieceId)
+                    sys.stdin.read(1)
+
                     return pieceId
 
 
     def placeCornerToDown(self, piece, targetColour):
 
-        #Take Piece to FUR
+        print('pieceId: ' + piece.pieceId)
+        sys.stdin.read(1)
+
+        #Take the piece to FUR
         if piece.pieceId == 'FUL':
             self.moveUpP()
         elif piece.pieceId == 'FUR':
@@ -378,6 +411,13 @@ class Rubik2x2(Rubik):
             self.moveRightP()
             self.moveRightP()
 
+        print('status before corner algo')
+        self.printCube()
+        sys.stdin.read(1)
+
+        #Update piece instance after movements
+        piece = self.piecesMap['FUR']
+
         #Take the piece to the floor:
         if piece.getColour(self.layersMap, 'F') == targetColour:
             self.moveCornerAlgo()
@@ -387,8 +427,12 @@ class Rubik2x2(Rubik):
         elif piece.getColour(self.layersMap, 'R') == targetColour:
             for i in range(5):
                 self.moveCornerAlgo()
-       
-            
+
+        print('status after corner algo')
+        self.printCube()
+        sys.stdin.read(1)
+
+
     def moveCornerAlgo(self):
         self.moveUp()
         self.moveRight()
@@ -403,22 +447,22 @@ class Rubik2x2(Rubik):
         result += '\n'
         result += '\n'
 
-        result += ' ' + self.up[0][0]
-        result += self.up[0][1]
+        result += ' ' + self.layersMap['U'][0][0]
+        result += self.layersMap['U'][0][1]
         result += '\n'
-        result += self.up[1][0]
-        result += self.up[1][1]
-        result += ' ' + self.right[0][1]
+        result += self.layersMap['U'][1][0]
+        result += self.layersMap['U'][1][1]
+        result += ' ' + self.layersMap['R'][0][1]
         result += '\n'
 
-        result += self.front[0][0]
-        result += self.front[0][1]
-        result += self.right[0][0]
-        result += self.right[1][1]
+        result += self.layersMap['F'][0][0]
+        result += self.layersMap['F'][0][1]
+        result += self.layersMap['R'][0][0]
+        result += self.layersMap['R'][1][1]
         result += '\n'
-        result += self.front[1][0]
-        result += self.front[1][1]
-        result += self.right[1][0]
+        result += self.layersMap['F'][1][0]
+        result += self.layersMap['F'][1][1]
+        result += self.layersMap['R'][1][0]
 
         print(result)
 
@@ -428,22 +472,22 @@ class Rubik2x2(Rubik):
         result += '\n'
         result += '\n'
 
-        result += self.back[0][0]
-        result += self.back[0][1]
-        result += self.left[0][0]
+        result += self.layersMap['B'][0][0]
+        result += self.layersMap['B'][0][1]
+        result += self.layersMap['L'][0][0]
         result += '\n'
-        result += self.back[1][0]
-        result += self.back[1][1]
-        result += self.left[1][0]
-        result += self.left[0][1]
-        result += '\n'
-
-        result += self.down[1][1]
-        result += self.down[1][0]
-        result += ' ' + self.left[1][1]
+        result += self.layersMap['B'][1][0]
+        result += self.layersMap['B'][1][1]
+        result += self.layersMap['L'][1][0]
+        result += self.layersMap['L'][0][1]
         result += '\n'
 
-        result += ' ' + self.down[0][1]
-        result += self.down[0][0]
+        result += self.layersMap['D'][1][1]
+        result += self.layersMap['D'][1][0]
+        result += ' ' + self.layersMap['L'][1][1]
+        result += '\n'
+
+        result += ' ' + self.layersMap['D'][0][1]
+        result += self.layersMap['D'][0][0]
 
         print(result)
