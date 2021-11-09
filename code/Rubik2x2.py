@@ -23,14 +23,16 @@ class Corner:
         return coloursSet
 
 
-
 class Rubik2x2(Rubik):
-    
+
     def __init__(self):
-        self.dim = 2
+        super().__init__()
+        self.initCube()
 
     #Create and fill the rubik
     def initCube(self):
+        self.dim = 2
+        self.layersMap = {}
         self.layersMap['F'] = [['G' for y in range(self.dim)] for x in range(self.dim)]
         self.layersMap['B'] = [['B' for y in range(self.dim)] for x in range(self.dim)]
         self.layersMap['U'] = [['Y' for y in range(self.dim)] for x in range(self.dim)]
@@ -38,6 +40,7 @@ class Rubik2x2(Rubik):
         self.layersMap['L'] = [['R' for y in range(self.dim)] for x in range(self.dim)]
         self.layersMap['R'] = [['O' for y in range(self.dim)] for x in range(self.dim)]
 
+        self.piecesMap = {}
         self.piecesMap['FUL'] = Corner('FUL', {'F' : [0,0], 'U': [1,0], 'L': [0,1]})
         self.piecesMap['FUR'] = Corner('FUR', {'F' : [0,1], 'U': [1,1], 'R': [0,0]})
         self.piecesMap['FDL'] = Corner('FDL', {'F' : [1,0], 'D': [0,0], 'L': [1,1]})
@@ -311,12 +314,31 @@ class Rubik2x2(Rubik):
         self.solveDownFloor()
 
         #Match one top corner
+        numOfPlacedTopPieces = self.prepareToSolveTopFloor()
 
-        #Position rest of the corners
+        print('numOfCoincidencesOut: ' + str(numOfPlacedTopPieces))
+        self.printCube()
+        sys.stdin.read(1)
+
+        if numOfPlacedTopPieces == 1:
+
+            print('rotate corners')
+
+            #Position rest of the corners
+            self.rotateCorners()
+        
+        print('rotate each corner')
+        sys.stdin.read(1)
 
         #Rotate top corners
+        self.rotateEachCorner()
 
         #Final Alignment cube
+        self.centerCube()
+
+        print('final after center')
+        self.printCube()
+        sys.stdin.read(1)
 
 
     def solveDownFloor(self):
@@ -324,23 +346,23 @@ class Rubik2x2(Rubik):
         #Iterate 3 times to position the 3 pieces
         for i in range(3):
 
-            print('Start solve debug pos: ' + str(i))
-            sys.stdin.read(1)
+            #print('Start solve debug pos: ' + str(i))
+            #sys.stdin.read(1)
 
             #Identify first position in down layer and get colours
             firstCornerDown = self.piecesMap['FDL']
             downColour = firstCornerDown.getColour(self.layersMap, 'D')
             frontColour = firstCornerDown.getColour(self.layersMap, 'F')
             
-            print('downColour: ' + downColour)
-            print('frontColour: ' + frontColour)
-            sys.stdin.read(1)
+            #print('downColour: ' + downColour)
+            #print('frontColour: ' + frontColour)
+            #sys.stdin.read(1)
 
             #Find piece that should go on the right sending colours to be find and exclusion of the current piece
-            pieceIdFound = self.findPiece(set([downColour, frontColour]), set(['FDL'])])
+            pieceIdFound = self.findPiece(set([downColour, frontColour]), set(['FDL']))
             
-            print('pieceIdFound: ' + pieceIdFound)
-            sys.stdin.read(1)
+            #print('pieceIdFound: ' + pieceIdFound)
+            #sys.stdin.read(1)
             
             cornerPiece = self.piecesMap[pieceIdFound]
 
@@ -358,33 +380,33 @@ class Rubik2x2(Rubik):
     def findPiece(self, colours, exceptions) -> str:
         for pieceId in self.piecesMap.keys():
             
-            print('pieceId: ' + pieceId)
-            sys.stdin.read(1)
+            #print('pieceId: ' + pieceId)
+            #sys.stdin.read(1)
             
             if not pieceId in exceptions:
                 piece = self.piecesMap[pieceId]
 
-                print('piece Id: ' + piece.pieceId)
-                sys.stdin.read(1)
+                #print('piece Id: ' + piece.pieceId)
+                #sys.stdin.read(1)
 
                 pieceColoursSet = piece.getColoursSet(self.layersMap)
 
-                print('pieceColoursSet: ' + str(pieceColoursSet))
-                print('colours: ' + str(colours))
-                sys.stdin.read(1)
+                #print('pieceColoursSet: ' + str(pieceColoursSet))
+                #print('colours: ' + str(colours))
+                #sys.stdin.read(1)
 
                 if colours.issubset(pieceColoursSet):
 
-                    print('return piece Id: ' + pieceId)
-                    sys.stdin.read(1)
+                    #print('return piece Id: ' + pieceId)
+                    #sys.stdin.read(1)
 
                     return pieceId
 
 
     def placeCornerToDown(self, piece, targetColour):
 
-        print('pieceId: ' + piece.pieceId)
-        sys.stdin.read(1)
+        #print('pieceId: ' + piece.pieceId)
+        #sys.stdin.read(1)
 
         #Take the piece to FUR
         if piece.pieceId == 'FUL':
@@ -397,7 +419,7 @@ class Rubik2x2(Rubik):
             if piece.getColour(self.layersMap, 'D') == targetColour:
                 return #The piece is already in the correct position and rotation
             else:
-                self.moveRight()
+                self.moveCornerAlgo()
         elif piece.pieceId == 'BUL':
             self.moveUp()
             self.moveUp()
@@ -411,9 +433,9 @@ class Rubik2x2(Rubik):
             self.moveRightP()
             self.moveRightP()
 
-        print('status before corner algo')
-        self.printCube()
-        sys.stdin.read(1)
+        #print('status before corner algo')
+        #self.printCube()
+        #sys.stdin.read(1)
 
         #Update piece instance after movements
         piece = self.piecesMap['FUR']
@@ -428,9 +450,9 @@ class Rubik2x2(Rubik):
             for i in range(5):
                 self.moveCornerAlgo()
 
-        print('status after corner algo')
-        self.printCube()
-        sys.stdin.read(1)
+        #print('status after corner algo')
+        #self.printCube()
+        #sys.stdin.read(1)
 
 
     def moveCornerAlgo(self):
@@ -438,6 +460,176 @@ class Rubik2x2(Rubik):
         self.moveRight()
         self.moveUpP()
         self.moveRightP()
+
+
+    def prepareToSolveTopFloor(self) -> int:
+        expectedTopColour = self.getExpectedTopColour()
+
+        print('expectedTopColour: ' + expectedTopColour)
+        sys.stdin.read(1)
+
+        numOfCoincidences = 0
+        topPositions = ['FUL','FUR','BUL','BUR']
+        
+        iterationsWith2 = 0
+        while True:
+            for position in topPositions:
+                topColourSet = self.piecesMap[position].getColoursSet(self.layersMap)
+                topColourSet.remove(expectedTopColour);
+                downColourSet = self.piecesMap[self.oppositeCornersMap[position]].getColoursSet(self.layersMap)
+
+                if topColourSet.issubset(downColourSet):
+                    numOfCoincidences = numOfCoincidences + 1
+
+            print('numOfCoincidencesIn: ' + str(numOfCoincidences))
+            sys.stdin.read(1)
+
+            if numOfCoincidences != 1 and numOfCoincidences != 4:
+                if numOfCoincidences == 2:
+                    iterationsWith2 = iterationsWith2 + 1
+                    if iterationsWith2 > 2:
+                        iterationsWith2 = 0
+
+                        self.moveLeftP()
+                        self.moveUp()
+                        self.moveRight()
+                        self.moveUpP()
+                        self.moveLeft()
+                        self.moveUp()
+                        self.moveRightP()
+                        self.moveUpP()                        
+
+                self.moveUp()
+                numOfCoincidences = 0
+            else:
+                break
+
+        return numOfCoincidences
+
+
+    def getExpectedTopColour(self):
+        return self.oppositeColourMap[self.layersMap['D'][0][0]]
+
+    def getExpectedFrontColour(self):
+        return self.oppositeColourMap[self.layersMap['B'][1][1]]
+
+    def rotateCorners(self):
+        expectedTopColour = self.getExpectedTopColour()
+        rotateClockSide = None
+
+        print('rotate corners in')
+
+        while True:
+            topColourSet = self.piecesMap['FUR'].getColoursSet(self.layersMap)
+            topColourSet.remove(expectedTopColour);
+            downColourSet = self.piecesMap[self.oppositeCornersMap['FUR']].getColoursSet(self.layersMap)
+
+            print('que paso')
+
+            if not topColourSet.issubset(downColourSet):
+                print('rotate looking match corner');
+                self.printCube()
+                sys.stdin.read(1)
+                
+                self.fullRotateVertical()
+                continue
+            else:
+                print('else rotate')
+                topColourSet = self.piecesMap['FUL'].getColoursSet(self.layersMap)
+                topColourSet.remove(expectedTopColour);
+                downColourSet = self.piecesMap[self.oppositeCornersMap['BUL']].getColoursSet(self.layersMap)
+
+                print('topColourset: ' + str(topColourSet))
+                print('downColourset: ' + str(downColourSet))
+                if topColourSet.issubset(downColourSet):
+                    rotateClockSide = True
+                else:
+                    rotateClockSide = False
+                
+                break
+        
+        print('rotateClockSide: ' + str(rotateClockSide));
+        self.printCube()
+        sys.stdin.read(1)
+
+        if rotateClockSide:
+            self.moveLeftP()
+            self.moveUp()
+            self.moveRight()
+            self.moveUpP()
+            self.moveLeft()
+            self.moveUp()
+            self.moveRightP()
+            self.moveUpP()
+        else:
+            self.fullRotateVertical()
+            self.moveRight()
+            self.moveUpP()
+            self.moveLeftP()
+            self.moveUp()
+            self.moveRightP()
+            self.moveUpP()
+            self.moveLeft()
+            self.moveUp()
+
+        print('rotateCornersEnd');
+        self.printCube()
+        sys.stdin.read(1)
+
+
+    def rotateEachCorner(self):
+        expectedTopColour = self.getExpectedTopColour()
+        for i in range(4):
+            topColour = self.layersMap['U'][1][1]
+
+            print('topColour: ' + topColour);
+            print('expectedTopColour: ' + expectedTopColour);
+            
+            if topColour != expectedTopColour:
+                frontColour = self.layersMap['F'][0][1]
+                if frontColour == expectedTopColour:
+                    print('rotate clockside');
+                    self.rotateCornerClockSide()
+                else:
+                    print('rotate anticlockside');
+                    self.rotateCornerAntiClockSide()
+            
+            print('cube after rotate corner individually')
+            self.printCube()
+            sys.stdin.read(1)
+
+            self.moveUp()
+
+            print('cube after move up')
+            self.printCube()
+            sys.stdin.read(1)
+
+
+    def rotateCornerClockSide(self):
+        for i in range(2):
+            self.moveRightP()
+            self.moveDown()
+            self.moveRight()
+            self.moveDownP()
+
+
+    def rotateCornerAntiClockSide(self):
+        for i in range(2):
+            self.moveDown()
+            self.moveRightP()
+            self.moveDownP()
+            self.moveRight()
+
+
+    def centerCube(self):
+        expectedFrontColour = self.getExpectedFrontColour()
+        while True:
+            frontColour = self.layersMap['F'][0][0]
+            if frontColour != expectedFrontColour:
+                self.moveUp()
+            else:
+                break
+        
 
     ##################
     ### OUTPUT METHODS
