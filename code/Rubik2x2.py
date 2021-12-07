@@ -6,8 +6,6 @@ class Corner:
     pieceId = None
     coordsByLayer = None
 
-    test = None
-
     def __init__(self, pieceId, coordsByLayer):
         self.pieceId = pieceId
         self.coordsByLayer = coordsByLayer
