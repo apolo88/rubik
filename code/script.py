@@ -9,6 +9,7 @@ def main():
     print('Welcome to Rubik! \n')
     dimOption = showDimMenu()
     rubikInstance = None
+    test = None
 
     #Checks the dimension for the cube
     if dimOption == '1':
