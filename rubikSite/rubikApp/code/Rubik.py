@@ -7,8 +7,14 @@ class Rubik:
     dim = None
 
     #Properties to store the cube, one matrix per layer and references to pieces
-    layersMap = {}
-    piecesMap = {}
+    layersMap = None
+    piecesMap = None
+    oppositeColourMap = None
+    oppositeCornersMap = None
+
+    def __init__(self):
+        self.oppositeColourMap = {'G':'B','B':'G','Y':'W','W':'Y','O':'R','R':'O'}
+        self.oppositeCornersMap = {'FUL':'FDL','FUR':'FDR','FDL':'FUL','FDR':'FUR','BUL':'BDL','BUR':'BDR','BDL':'BUL','BDR':'BUR'}
 
     #Create and fill the rubik
     def initCube(self):

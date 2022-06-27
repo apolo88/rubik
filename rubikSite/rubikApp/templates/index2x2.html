@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cubo Rubik</title>
+    <!--<link rel="stylesheet" href="style2x2.css">-->
+    <!-- Add additional CSS in static file -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style2x2.css' %}">
+</head>
+<body>
+    test {{ test_var }}
+
+    pruebaVar {{ F00 }}
+    <div class="contenedor">
+        <div class="cubo">
+            <!-- Front -->
+            <div class="cara">
+                <!-- 0,0 -->
+                <div class="pieza" style="background-color:{{ F00 }}"></div>
+                <!-- 0,1 -->
+                <div class="pieza" style="background-color:{{ F01 }}"></div>
+                <!-- 1,0 -->
+                <div class="pieza" style="background-color:{{ F10 }}"></div>
+                <!-- 1,1 -->
+                <div class="pieza" style="background-color:{{ F11 }}"></div>
+            </div>
+            <!-- Back -->
+            <div class="cara">
+                <!-- 0,1 -->
+                <div class="pieza" style="background-color:{{ B01 }}"></div>
+                <!-- 0,0 -->
+                <div class="pieza" style="background-color:{{ B00 }}"></div>
+                <!-- 1,1 -->
+                <div class="pieza" style="background-color:{{ B11 }}"></div>
+                <!-- 1,0 -->
+                <div class="pieza" style="background-color:{{ B10 }}"></div>
+            </div>
+            <!-- Left -->
+            <div class="cara">
+                <!-- 0,0 -->
+                <div class="pieza" style="background-color:{{ L00 }}"></div>
+                <!-- 0,1 -->
+                <div class="pieza" style="background-color:{{ L01 }}"></div>
+                <!-- 1,0 -->
+                <div class="pieza" style="background-color:{{ L10 }}"></div>
+                <!-- 1,1 -->
+                <div class="pieza" style="background-color:{{ L11 }}"></div>
+            </div>
+            <!-- Right -->
+            <div class="cara">
+                <!-- 0,1 -->
+                <div class="pieza" style="background-color:{{ R01 }}"></div>
+                <!-- 0,0 -->
+                <div class="pieza" style="background-color:{{ R00 }}"></div>
+                <!-- 1,1 -->
+                <div class="pieza" style="background-color:{{ R11 }}"></div>
+                <!-- 1,0 -->
+                <div class="pieza" style="background-color:{{ R10 }}"></div>
+            </div>
+            <!-- Down -->
+            <div class="cara">
+                <!-- 1,0 -->
+                <div class="pieza" style="background-color:{{ D10 }}"></div>
+                <!-- 1,1 -->
+                <div class="pieza" style="background-color:{{ D11 }}"></div>
+                <!-- 0,0 -->
+                <div class="pieza" style="background-color:{{ D00 }}"></div>
+                <!-- 0,1 -->
+                <div class="pieza" style="background-color:{{ D01 }}"></div>
+            </div>
+            <!-- Up -->
+            <div class="cara">
+                <!-- 0,0 -->
+                <div class="pieza" style="background-color:{{ U00 }}"></div>
+                <!-- 0,1 -->
+                <div class="pieza" style="background-color:{{ U01 }}"></div>
+                <!-- 1,0 -->
+                <div class="pieza" style="background-color:{{ U10 }}"></div>
+                <!-- 1,1 -->
+                <div class="pieza" style="background-color:{{ U11 }}"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

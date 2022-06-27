@@ -24,7 +24,7 @@ def main():
     print('\n')
 
     #Creates and initialize the cube
-    rubikInstance.initCube()
+    #rubikInstance.initCube()
 
     modeOption = None
     while modeOption != '4':

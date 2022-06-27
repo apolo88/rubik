@@ -1,0 +1,81 @@
+body{
+    margin: 5%;
+}
+.contenedor{
+    perspective: 1000px;
+    perspective-origin: 50% 50%;
+}
+.cubo{
+    transform-style: preserve-3d;
+    transform: rotateY(-30deg) rotateX(-3deg);
+    margin: 200px auto;
+    animation: giro 20s infinite linear;
+}
+@keyframes giro{
+    0%{
+        transform: rotate(-45deg) rotateY(0deg)
+    }
+    50%{
+        transform: rotate(45deg) rotateY(360deg)
+    }
+    0%{
+        transform: rotate(-45deg) rotateY(720deg)
+    }
+}
+.cubo, .cubo>div{
+    height: 300px;
+    width: 300px;
+}
+.cara{
+    position: absolute;
+    border: 2px solid black;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: black;
+}
+.pieza{
+    border: 2.5px solid black;
+    width: 95px;
+    height: 95px;
+    border-radius: 12%;
+}
+.cubo .cara:nth-child(1){
+    transform: translateZ(150px);
+}
+.cubo .cara:nth-child(1) .pieza{
+    background-color: red;
+}
+.cubo .cara:nth-child(2){
+    transform: translateZ(-150px);
+}
+.cubo .cara:nth-child(2) .pieza{
+    background-color: orange;
+}
+.cubo .cara:nth-child(3){
+    transform: rotateY(-90deg);
+    left: -150px;
+}
+.cubo .cara:nth-child(3) .pieza{
+    background-color: yellow;
+}
+.cubo .cara:nth-child(4){
+    transform: rotateY(-90deg);
+    left: 150px;
+}
+.cubo .cara:nth-child(4) .pieza{
+    background-color: white;
+}
+.cubo .cara:nth-child(5){
+    transform: rotateX(90deg);
+    top: 150px;
+}
+.cubo .cara:nth-child(5) .pieza{
+    background-color: green;
+}
+.cubo .cara:nth-child(6){
+    transform: rotateX(90deg);
+    top: -150px;
+}
+.cubo .cara:nth-child(6) .pieza{
+    background-color: blue;
+}
