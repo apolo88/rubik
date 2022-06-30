@@ -16,21 +16,50 @@ def index(request):
     )
 
 
+def clearCache(request):
+    """
+    Función vista para la página inicio del sitio.
+    """
+    cache.set('2x2Cube', None)
+    cache.set('2x2Step', None)
+
+    # Renderiza la plantilla HTML index.html con los datos en la variable contexto
+    return render(
+        request,
+        'clearcache.html',
+        context={},
+    )
+
+
 def twoByTwo(request):
     
     colorsMap = {'G':'green', 'B':'blue', 'Y':'yellow', 'W':'white', 'R':'red', 'O':'orange'}
 
-    rubikInstance = Rubik2x2()
-    rubikInstance.initCube()
-    rubikInstance.disorder('Simple')
-    testVar = rubikInstance.getCubeFront()
+    rubikInstance = cache.get('2x2Cube')
+    print('cache')
+    print(rubikInstance)
+
+    if rubikInstance is  None:
+        rubikInstance = Rubik2x2()
+        rubikInstance.initCube()
+        rubikInstance.disorder('Simple')
+        cache.set('2x2Cube', rubikInstance)
+    elif not rubikInstance.isSolved():
+        rubikStep = cache.get('2x2Step')
+        if rubikStep is  None:
+            rubikStep = 1
+        elif rubikStep <= 4:
+            rubikStep += 1
+
+        cache.set('2x2Step', rubikStep)
+        print('Step')
+        print(rubikStep)
+        rubikInstance.solveByStep(rubikStep)
+        cache.set('2x2Cube', rubikInstance)
+    
     cubeObject = rubikInstance.getCube()
-    #rubikInstance.printCubeFront()
-    #testVar = 5
 
     contextObject = {}
-    contextObject['color'] = 'black'
-    contextObject['test_var'] = testVar
     
     #Front
     contextObject['F00'] = colorsMap[cubeObject['F'][0][0]]

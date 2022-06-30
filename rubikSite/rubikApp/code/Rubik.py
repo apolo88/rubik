@@ -11,10 +11,12 @@ class Rubik:
     piecesMap = None
     oppositeColourMap = None
     oppositeCornersMap = None
+    solved = None
 
     def __init__(self):
         self.oppositeColourMap = {'G':'B','B':'G','Y':'W','W':'Y','O':'R','R':'O'}
         self.oppositeCornersMap = {'FUL':'FDL','FUR':'FDR','FDL':'FUL','FDR':'FUR','BUL':'BDL','BUR':'BDR','BDL':'BUL','BDR':'BUR'}
+        self.solved = False
 
     #Create and fill the rubik
     def initCube(self):
@@ -95,7 +97,6 @@ class Rubik:
 
         for i in range(numOfMovements):
             randNumber = randrange(13)
-            print(randNumber)
             if randNumber == 1:
                 self.moveFront()
             elif randNumber == 2:

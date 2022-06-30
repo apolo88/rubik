@@ -308,62 +308,62 @@ class Rubik2x2(Rubik):
     ####################
     ### SOLUTION METHODS
     ####################
-    def solve(self, mode):
+    def solveByStep(self, step):
+        if step == 1:
+            #Solve down floor
+            self.solveDownFloor()
 
+        elif step == 2:
+            #Match one top corner
+            numOfPlacedTopPieces = self.prepareToSolveTopFloor()
+
+            if numOfPlacedTopPieces == 1:
+                #Position rest of the corners
+                self.rotateCorners()
+        
+        elif step == 3:
+            #Rotate top corners
+            self.rotateEachCorner()
+
+        elif step == 4:
+            #Final Alignment cube
+            self.centerCube()
+
+            #Set the cube as solved
+            self.solved = True
+
+    
+    def solve(self):
         #Solve down floor
         self.solveDownFloor()
 
         #Match one top corner
         numOfPlacedTopPieces = self.prepareToSolveTopFloor()
 
-        print('numOfCoincidencesOut: ' + str(numOfPlacedTopPieces))
-        self.printCube()
-        sys.stdin.read(1)
-
         if numOfPlacedTopPieces == 1:
-
-            print('rotate corners')
-
             #Position rest of the corners
             self.rotateCorners()
         
-        print('rotate each corner')
-        sys.stdin.read(1)
-
         #Rotate top corners
         self.rotateEachCorner()
 
         #Final Alignment cube
         self.centerCube()
 
-        print('final after center')
-        self.printCube()
-        sys.stdin.read(1)
+        #Set the cube as solved
+        self.solved = True
 
 
     def solveDownFloor(self):
-        
         #Iterate 3 times to position the 3 pieces
         for i in range(3):
-
-            #print('Start solve debug pos: ' + str(i))
-            #sys.stdin.read(1)
-
             #Identify first position in down layer and get colours
             firstCornerDown = self.piecesMap['FDL']
             downColour = firstCornerDown.getColour(self.layersMap, 'D')
             frontColour = firstCornerDown.getColour(self.layersMap, 'F')
-            
-            #print('downColour: ' + downColour)
-            #print('frontColour: ' + frontColour)
-            #sys.stdin.read(1)
 
             #Find piece that should go on the right sending colours to be find and exclusion of the current piece
-            pieceIdFound = self.findPiece(set([downColour, frontColour]), set(['FDL']))
-            
-            #print('pieceIdFound: ' + pieceIdFound)
-            #sys.stdin.read(1)
-            
+            pieceIdFound = self.findPiece(set([downColour, frontColour]), set(['FDL']))    
             cornerPiece = self.piecesMap[pieceIdFound]
 
             #Place piece on correct position
@@ -372,42 +372,17 @@ class Rubik2x2(Rubik):
             #rotate cube vertical
             self.fullRotateVertical()
 
-            print('print after rotate: ' + pieceIdFound)
-            self.printCube()
-            sys.stdin.read(1)
-
 
     def findPiece(self, colours, exceptions) -> str:
         for pieceId in self.piecesMap.keys():
-            
-            #print('pieceId: ' + pieceId)
-            #sys.stdin.read(1)
-            
             if not pieceId in exceptions:
                 piece = self.piecesMap[pieceId]
-
-                #print('piece Id: ' + piece.pieceId)
-                #sys.stdin.read(1)
-
                 pieceColoursSet = piece.getColoursSet(self.layersMap)
-
-                #print('pieceColoursSet: ' + str(pieceColoursSet))
-                #print('colours: ' + str(colours))
-                #sys.stdin.read(1)
-
                 if colours.issubset(pieceColoursSet):
-
-                    #print('return piece Id: ' + pieceId)
-                    #sys.stdin.read(1)
-
                     return pieceId
 
 
     def placeCornerToDown(self, piece, targetColour):
-
-        #print('pieceId: ' + piece.pieceId)
-        #sys.stdin.read(1)
-
         #Take the piece to FUR
         if piece.pieceId == 'FUL':
             self.moveUpP()
@@ -433,10 +408,6 @@ class Rubik2x2(Rubik):
             self.moveRightP()
             self.moveRightP()
 
-        #print('status before corner algo')
-        #self.printCube()
-        #sys.stdin.read(1)
-
         #Update piece instance after movements
         piece = self.piecesMap['FUR']
 
@@ -450,10 +421,6 @@ class Rubik2x2(Rubik):
             for i in range(5):
                 self.moveCornerAlgo()
 
-        #print('status after corner algo')
-        #self.printCube()
-        #sys.stdin.read(1)
-
 
     def moveCornerAlgo(self):
         self.moveUp()
@@ -464,10 +431,6 @@ class Rubik2x2(Rubik):
 
     def prepareToSolveTopFloor(self) -> int:
         expectedTopColour = self.getExpectedTopColour()
-
-        print('expectedTopColour: ' + expectedTopColour)
-        sys.stdin.read(1)
-
         numOfCoincidences = 0
         topPositions = ['FUL','FUR','BUL','BUR']
         
@@ -480,9 +443,6 @@ class Rubik2x2(Rubik):
 
                 if topColourSet.issubset(downColourSet):
                     numOfCoincidences = numOfCoincidences + 1
-
-            print('numOfCoincidencesIn: ' + str(numOfCoincidences))
-            sys.stdin.read(1)
 
             if numOfCoincidences != 1 and numOfCoincidences != 4:
                 if numOfCoincidences == 2:
@@ -510,47 +470,34 @@ class Rubik2x2(Rubik):
     def getExpectedTopColour(self):
         return self.oppositeColourMap[self.layersMap['D'][0][0]]
 
+
     def getExpectedFrontColour(self):
         return self.oppositeColourMap[self.layersMap['B'][1][1]]
+
 
     def rotateCorners(self):
         expectedTopColour = self.getExpectedTopColour()
         rotateClockSide = None
-
-        print('rotate corners in')
 
         while True:
             topColourSet = self.piecesMap['FUR'].getColoursSet(self.layersMap)
             topColourSet.remove(expectedTopColour);
             downColourSet = self.piecesMap[self.oppositeCornersMap['FUR']].getColoursSet(self.layersMap)
 
-            print('que paso')
-
             if not topColourSet.issubset(downColourSet):
-                print('rotate looking match corner');
-                self.printCube()
-                sys.stdin.read(1)
-                
                 self.fullRotateVertical()
                 continue
             else:
-                print('else rotate')
                 topColourSet = self.piecesMap['FUL'].getColoursSet(self.layersMap)
                 topColourSet.remove(expectedTopColour);
                 downColourSet = self.piecesMap[self.oppositeCornersMap['BUL']].getColoursSet(self.layersMap)
 
-                print('topColourset: ' + str(topColourSet))
-                print('downColourset: ' + str(downColourSet))
                 if topColourSet.issubset(downColourSet):
                     rotateClockSide = True
                 else:
                     rotateClockSide = False
                 
                 break
-        
-        print('rotateClockSide: ' + str(rotateClockSide));
-        self.printCube()
-        sys.stdin.read(1)
 
         if rotateClockSide:
             self.moveLeftP()
@@ -572,37 +519,20 @@ class Rubik2x2(Rubik):
             self.moveLeft()
             self.moveUp()
 
-        print('rotateCornersEnd');
-        self.printCube()
-        sys.stdin.read(1)
-
 
     def rotateEachCorner(self):
         expectedTopColour = self.getExpectedTopColour()
         for i in range(4):
             topColour = self.layersMap['U'][1][1]
-
-            print('topColour: ' + topColour);
-            print('expectedTopColour: ' + expectedTopColour);
             
             if topColour != expectedTopColour:
                 frontColour = self.layersMap['F'][0][1]
                 if frontColour == expectedTopColour:
-                    print('rotate clockside');
                     self.rotateCornerClockSide()
                 else:
-                    print('rotate anticlockside');
                     self.rotateCornerAntiClockSide()
-            
-            print('cube after rotate corner individually')
-            self.printCube()
-            sys.stdin.read(1)
 
             self.moveUp()
-
-            print('cube after move up')
-            self.printCube()
-            sys.stdin.read(1)
 
 
     def rotateCornerClockSide(self):
@@ -636,7 +566,8 @@ class Rubik2x2(Rubik):
     ##################
     def getCube(self):
         return self.layersMap
-    
+
+
     def getCubeFront(self):
         result = 'FRONT'
         result += '\n'
@@ -694,3 +625,7 @@ class Rubik2x2(Rubik):
 
     def printCubeBack(self):
         print(self.getCubeBack())
+
+    
+    def isSolved(self):
+        return self.solved

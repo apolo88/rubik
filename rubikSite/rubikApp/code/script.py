@@ -146,10 +146,10 @@ def solveMode(rubikInstance) -> str:
     solveOption = showSolveMenu()
     # Step by Step
     if solveOption == '1':
-        rubikInstance.solve('Step')
+        rubikInstance.solve()
     # Direct
     elif solveOption == '2':
-        rubikInstance.solve('Direct')
+        rubikInstance.solve()
     # Previous Menu
     elif solveOption == '3':
         return
