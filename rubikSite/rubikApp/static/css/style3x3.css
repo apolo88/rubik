@@ -13,13 +13,13 @@ body{
 }
 @keyframes giro{
     0%{
-        transform: rotate(-45deg) rotateY(0deg)
+        transform: rotate(-45deg) rotateY(0deg) rotateZ(45deg)
     }
     50%{
-        transform: rotate(45deg) rotateY(360deg)
+        transform: rotate(45deg) rotateY(360deg) rotateZ(45deg)
     }
     0%{
-        transform: rotate(-45deg) rotateY(720deg)
+        transform: rotate(-45deg) rotateY(720deg) rotateZ(45deg)
     }
 }
 .cubo, .cubo>div{

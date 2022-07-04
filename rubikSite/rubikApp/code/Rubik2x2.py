@@ -40,15 +40,15 @@ class Rubik2x2(Rubik):
         self.layersMap['L'] = [['R' for y in range(self.dim)] for x in range(self.dim)]
         self.layersMap['R'] = [['O' for y in range(self.dim)] for x in range(self.dim)]
 
-        self.piecesMap = {}
-        self.piecesMap['FUL'] = Corner('FUL', {'F' : [0,0], 'U': [1,0], 'L': [0,1]})
-        self.piecesMap['FUR'] = Corner('FUR', {'F' : [0,1], 'U': [1,1], 'R': [0,0]})
-        self.piecesMap['FDL'] = Corner('FDL', {'F' : [1,0], 'D': [0,0], 'L': [1,1]})
-        self.piecesMap['FDR'] = Corner('FDR', {'F' : [1,1], 'D': [0,1], 'R': [1,0]})
-        self.piecesMap['BUL'] = Corner('BUL', {'B' : [0,1], 'U': [0,0], 'L': [0,0]})
-        self.piecesMap['BUR'] = Corner('BUR', {'B' : [0,0], 'U': [0,1], 'R': [0,1]})
-        self.piecesMap['BDL'] = Corner('BDL', {'B' : [1,1], 'D': [1,0], 'L': [1,0]})
-        self.piecesMap['BDR'] = Corner('BDR', {'B' : [1,0], 'D': [1,1], 'R': [1,1]})
+        self.cornersMap = {}
+        self.cornersMap['FUL'] = Corner('FUL', {'F' : [0,0], 'U': [1,0], 'L': [0,1]})
+        self.cornersMap['FUR'] = Corner('FUR', {'F' : [0,1], 'U': [1,1], 'R': [0,0]})
+        self.cornersMap['FDL'] = Corner('FDL', {'F' : [1,0], 'D': [0,0], 'L': [1,1]})
+        self.cornersMap['FDR'] = Corner('FDR', {'F' : [1,1], 'D': [0,1], 'R': [1,0]})
+        self.cornersMap['BUL'] = Corner('BUL', {'B' : [0,1], 'U': [0,0], 'L': [0,0]})
+        self.cornersMap['BUR'] = Corner('BUR', {'B' : [0,0], 'U': [0,1], 'R': [0,1]})
+        self.cornersMap['BDL'] = Corner('BDL', {'B' : [1,1], 'D': [1,0], 'L': [1,0]})
+        self.cornersMap['BDR'] = Corner('BDR', {'B' : [1,0], 'D': [1,1], 'R': [1,1]})
 
     ####################
     ### MOVEMENT METHODS
@@ -305,6 +305,31 @@ class Rubik2x2(Rubik):
         self.layersMap['F'][0][1] = aux
     
 
+    def fullRotateVertical(self):
+        self.moveUp()
+        self.moveDownP()
+
+    def fullRotateVerticalP(self):
+        self.moveUpP()
+        self.moveDown()
+
+    def fullRotateHorizontal(self):
+        self.moveRight()
+        self.moveLeftP()
+
+    def fullRotateHorizontalP(self):
+        self.moveRightP()
+        self.moveLeft()
+
+    def fullRotateProfund(self):
+        self.moveFront()
+        self.moveBackP()
+
+    def fullRotateProfundP(self):
+        self.moveFrontP()
+        self.moveBack()
+
+
     ####################
     ### SOLUTION METHODS
     ####################
@@ -358,13 +383,13 @@ class Rubik2x2(Rubik):
         #Iterate 3 times to position the 3 pieces
         for i in range(3):
             #Identify first position in down layer and get colours
-            firstCornerDown = self.piecesMap['FDL']
+            firstCornerDown = self.cornersMap['FDL']
             downColour = firstCornerDown.getColour(self.layersMap, 'D')
             frontColour = firstCornerDown.getColour(self.layersMap, 'F')
 
             #Find piece that should go on the right sending colours to be find and exclusion of the current piece
             pieceIdFound = self.findPiece(set([downColour, frontColour]), set(['FDL']))    
-            cornerPiece = self.piecesMap[pieceIdFound]
+            cornerPiece = self.cornersMap[pieceIdFound]
 
             #Place piece on correct position
             self.placeCornerToDown(cornerPiece, downColour)
@@ -374,9 +399,9 @@ class Rubik2x2(Rubik):
 
 
     def findPiece(self, colours, exceptions) -> str:
-        for pieceId in self.piecesMap.keys():
+        for pieceId in self.cornersMap.keys():
             if not pieceId in exceptions:
-                piece = self.piecesMap[pieceId]
+                piece = self.cornersMap[pieceId]
                 pieceColoursSet = piece.getColoursSet(self.layersMap)
                 if colours.issubset(pieceColoursSet):
                     return pieceId
@@ -409,7 +434,7 @@ class Rubik2x2(Rubik):
             self.moveRightP()
 
         #Update piece instance after movements
-        piece = self.piecesMap['FUR']
+        piece = self.cornersMap['FUR']
 
         #Take the piece to the floor:
         if piece.getColour(self.layersMap, 'F') == targetColour:
@@ -437,9 +462,9 @@ class Rubik2x2(Rubik):
         iterationsWith2 = 0
         while True:
             for position in topPositions:
-                topColourSet = self.piecesMap[position].getColoursSet(self.layersMap)
+                topColourSet = self.cornersMap[position].getColoursSet(self.layersMap)
                 topColourSet.remove(expectedTopColour);
-                downColourSet = self.piecesMap[self.oppositeCornersMap[position]].getColoursSet(self.layersMap)
+                downColourSet = self.cornersMap[self.oppositeCornersMap[position]].getColoursSet(self.layersMap)
 
                 if topColourSet.issubset(downColourSet):
                     numOfCoincidences = numOfCoincidences + 1
@@ -480,17 +505,17 @@ class Rubik2x2(Rubik):
         rotateClockSide = None
 
         while True:
-            topColourSet = self.piecesMap['FUR'].getColoursSet(self.layersMap)
+            topColourSet = self.cornersMap['FUR'].getColoursSet(self.layersMap)
             topColourSet.remove(expectedTopColour);
-            downColourSet = self.piecesMap[self.oppositeCornersMap['FUR']].getColoursSet(self.layersMap)
+            downColourSet = self.cornersMap[self.oppositeCornersMap['FUR']].getColoursSet(self.layersMap)
 
             if not topColourSet.issubset(downColourSet):
                 self.fullRotateVertical()
                 continue
             else:
-                topColourSet = self.piecesMap['FUL'].getColoursSet(self.layersMap)
+                topColourSet = self.cornersMap['FUL'].getColoursSet(self.layersMap)
                 topColourSet.remove(expectedTopColour);
-                downColourSet = self.piecesMap[self.oppositeCornersMap['BUL']].getColoursSet(self.layersMap)
+                downColourSet = self.cornersMap[self.oppositeCornersMap['BUL']].getColoursSet(self.layersMap)
 
                 if topColourSet.issubset(downColourSet):
                     rotateClockSide = True

@@ -8,7 +8,7 @@ class Rubik:
 
     #Properties to store the cube, one matrix per layer and references to pieces
     layersMap = None
-    piecesMap = None
+    cornersMap = None
     oppositeColourMap = None
     oppositeCornersMap = None
     solved = None
@@ -58,30 +58,6 @@ class Rubik:
 
     def moveRightP(self):
         pass
-
-    def fullRotateVertical(self):
-        self.moveUp()
-        self.moveDownP()
-
-    def fullRotateVerticalP(self):
-        self.moveUpP()
-        self.moveDown()
-
-    def fullRotateHorizontal(self):
-        self.moveRight()
-        self.moveLeftP()
-
-    def fullRotateHorizontalP(self):
-        self.moveRightP()
-        self.moveLeft()
-
-    def fullRotateProfund(self):
-        self.moveFront()
-        self.moveBackP()
-
-    def fullRotateProfundP(self):
-        self.moveFrontP()
-        self.moveBack()
 
 
     #Disorder Method

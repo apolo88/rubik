@@ -4,77 +4,138 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cubo Rubik</title>
-    <link rel="stylesheet" href="style3x3.css">
+    <title>Cubo Rubik 3x3</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style3x3.css' %}">
 </head>
 <body>
     <div class="contenedor">
         <div class="cubo">
+            <!-- Front -->
             <div class="cara">
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
+                <!-- 0,0 -->
+                <div class="pieza" style="background-color:{{ F00 }}" ></div>
+                <!-- 0,1 -->
+                <div class="pieza" style="background-color:{{ F01 }}" ></div>
+                <!-- 0,2 -->
+                <div class="pieza" style="background-color:{{ F02 }}" ></div>
+                <!-- 1,0 -->
+                <div class="pieza" style="background-color:{{ F10 }}" ></div>
+                <!-- 1,1 -->
+                <div class="pieza" style="background-color:{{ F11 }}" ></div>
+                <!-- 1,2 -->
+                <div class="pieza" style="background-color:{{ F12 }}" ></div>
+                <!-- 2,0 -->
+                <div class="pieza" style="background-color:{{ F20 }}" ></div>
+                <!-- 2,1 -->
+                <div class="pieza" style="background-color:{{ F21 }}" ></div>
+                <!-- 2,2 -->
+                <div class="pieza" style="background-color:{{ F22 }}" ></div>
             </div>
+            <!-- Back -->
             <div class="cara">
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
+                <!-- 0,2 -->
+                <div class="pieza" style="background-color:{{ B02 }}"></div>
+                <!-- 0,1 -->
+                <div class="pieza" style="background-color:{{ B01 }}"></div>
+                <!-- 0,0 -->
+                <div class="pieza" style="background-color:{{ B00 }}"></div>
+                <!-- 1,2 -->
+                <div class="pieza" style="background-color:{{ B12 }}"></div>
+                <!-- 1,1 -->
+                <div class="pieza" style="background-color:{{ B11 }}"></div>
+                <!-- 1,0 -->
+                <div class="pieza" style="background-color:{{ B10 }}"></div>
+                <!-- 2,2 -->
+                <div class="pieza" style="background-color:{{ B22 }}"></div>
+                <!-- 2,1 -->
+                <div class="pieza" style="background-color:{{ B21 }}"></div>
+                <!-- 2,0 -->
+                <div class="pieza" style="background-color:{{ B20 }}"></div>
             </div>
+            <!-- Left -->
             <div class="cara">
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
+                <!-- 0,0 -->
+                <div class="pieza" style="background-color:{{ L00 }}"></div>
+                <!-- 0,1 -->
+                <div class="pieza" style="background-color:{{ L01 }}"></div>
+                <!-- 0,2 -->
+                <div class="pieza" style="background-color:{{ L02 }}"></div>
+                <!-- 1,0 -->
+                <div class="pieza" style="background-color:{{ L10 }}"></div>
+                <!-- 1,1 -->
+                <div class="pieza" style="background-color:{{ L11 }}"></div>
+                <!-- 1,2 -->
+                <div class="pieza" style="background-color:{{ L12 }}"></div>
+                <!-- 2,0 -->
+                <div class="pieza" style="background-color:{{ L20 }}"></div>
+                <!-- 2,1 -->
+                <div class="pieza" style="background-color:{{ L21 }}"></div>
+                <!-- 2,2 -->
+                <div class="pieza" style="background-color:{{ L22 }}"></div>
             </div>
+            <!-- Right -->
             <div class="cara">
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
+                <!-- 0,2 -->
+                <div class="pieza" style="background-color:{{ R02 }}"></div>
+                <!-- 0,1 -->
+                <div class="pieza" style="background-color:{{ R01 }}"></div>
+                <!-- 0,0 -->
+                <div class="pieza" style="background-color:{{ R00 }}"></div>
+                <!-- 1,2 -->
+                <div class="pieza" style="background-color:{{ R12 }}"></div>
+                <!-- 1,1 -->
+                <div class="pieza" style="background-color:{{ R11 }}"></div>
+                <!-- 1,0 -->
+                <div class="pieza" style="background-color:{{ R10 }}"></div>
+                <!-- 2,2 -->
+                <div class="pieza" style="background-color:{{ R22 }}"></div>
+                <!-- 2,1 -->
+                <div class="pieza" style="background-color:{{ R21 }}"></div>
+                <!-- 2,0 -->
+                <div class="pieza" style="background-color:{{ R20 }}"></div>
             </div>
+            <!-- Down -->
             <div class="cara">
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
+                <!-- 2,0 -->
+                <div class="pieza" style="background-color:{{ D20 }}"></div>
+                <!-- 2,1 -->
+                <div class="pieza" style="background-color:{{ D21 }}"></div>
+                <!-- 2,2 -->
+                <div class="pieza" style="background-color:{{ D22 }}"></div>
+                <!-- 1,0 -->
+                <div class="pieza" style="background-color:{{ D10 }}"></div>
+                <!-- 1,1 -->
+                <div class="pieza" style="background-color:{{ D11 }}"></div>
+                <!-- 1,2 -->
+                <div class="pieza" style="background-color:{{ D12 }}"></div>
+                <!-- 0,0 -->
+                <div class="pieza" style="background-color:{{ D00 }}"></div>
+                <!-- 0,1 -->
+                <div class="pieza" style="background-color:{{ D01 }}"></div>
+                <!-- 0,2 -->
+                <div class="pieza" style="background-color:{{ D02 }}"></div>
             </div>
+            <!-- Up -->
             <div class="cara">
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
-                <div class="pieza"></div>
+                <!-- 0,0 -->
+                <div class="pieza" style="background-color:{{ U00 }}"></div>
+                <!-- 0,1 -->
+                <div class="pieza" style="background-color:{{ U01 }}"></div>
+                <!-- 0,2 -->
+                <div class="pieza" style="background-color:{{ U02 }}"></div>
+                <!-- 1,0 -->
+                <div class="pieza" style="background-color:{{ U10 }}"></div>
+                <!-- 1,1 -->
+                <div class="pieza" style="background-color:{{ U11 }}"></div>
+                <!-- 1,2 -->
+                <div class="pieza" style="background-color:{{ U12 }}"></div>
+                <!-- 2,0 -->
+                <div class="pieza" style="background-color:{{ U20 }}"></div>
+                <!-- 2,1 -->
+                <div class="pieza" style="background-color:{{ U21 }}"></div>
+                <!-- 2,2 -->
+                <div class="pieza" style="background-color:{{ U22 }}"></div>
             </div>
         </div>
     </div>
